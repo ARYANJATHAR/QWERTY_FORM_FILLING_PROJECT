@@ -213,13 +213,14 @@ function validateUsername(username) {
 }
 
 function formatEmailFromVoice(voiceInput) {
+    console.log("Input to formatEmailFromVoice:", voiceInput); // Log the input to the function
     voiceInput = voiceInput
         .replace(/\b(at|attherate)\b/gi, '@')
         .replace(/\bdot\b/gi, '.')
         .replace(/\s+/g, '')
         .toLowerCase();
 
-    if (!validateEmail(voiceInput)) {
+   if (!validateEmail(voiceInput)) {
         return { valid: false, message: 'Please enter a valid email address.' };
     }
 
@@ -275,31 +276,35 @@ function startVoiceInput(inputId) {
             };
 
             recognition.onresult = async (event) => {
+                console.log("Full event object:", event); // Log the entire event
                 const result = event.results[0][0].transcript;
                 console.log("Voice input result:", result);
 
-                let validationResult;
+                 let validationResult;
                 let cleanedValue;
 
                 if (inputId === 'username') {
                     validationResult = validateUsername(result);
                     if (validationResult.valid) {
                         cleanedValue = validationResult.cleanedUsername;
+                         console.log("Username cleaned value:", cleanedValue);
                     }
                 } else if (inputId === 'email' || inputId === 'signInEmail' || inputId === 'forgotPasswordEmail') {
                     validationResult = formatEmailFromVoice(result);
                     if (validationResult.valid) {
                         cleanedValue = validationResult.formattedEmail;
-                        if (!validateEmail(cleanedValue)) {
+                        console.log("Email cleaned value before validation:", cleanedValue);
+                          if (!validateEmail(cleanedValue)) {
                             displayErrorMessage(errorId, 'Please enter a valid email address');
                             updateVoiceStatus(inputId, "failed");
                             return;
                         }
-                    }
-                } else if (inputId === 'password' || inputId === 'signInPassword' || inputId === 'newPassword' || inputId === 'confirmPassword') {
+                     }
+                 } else if (inputId === 'password' || inputId === 'signInPassword' || inputId === 'newPassword' || inputId === 'confirmPassword') {
                     const password = result;
                     cleanedValue = password.replace(/\s+/g, ''); // Remove spaces
-                    validationResult = validatePassword(cleanedValue);
+                    console.log("Password cleaned value before validation:", cleanedValue);
+                     validationResult = validatePassword(cleanedValue);
 
                     if (!validationResult.valid) {
                         displayErrorMessage(errorId, validationResult.message);
@@ -357,7 +362,13 @@ function startVoiceInput(inputId) {
                 let errorMessage = 'Error: Mic stopped';
                 if (event.error === 'not-allowed') {
                     errorMessage = 'Microphone access denied';
-                }
+                } else if (event.error === 'no-speech') {
+                      errorMessage = 'No speech was detected. Please try again.';
+                } else if (event.error === 'audio-capture') {
+                     errorMessage = 'Failed to capture audio. Check microphone permissions';
+                  } else {
+                     errorMessage = `Error: Mic stopped, details: ${event.message || event.error}`;
+                   }
                 updateVoiceStatus(inputId, errorMessage);
                 isListening = false;
             };
@@ -386,14 +397,19 @@ function switchTheme(e) {
 }
 
 function validatePassword(password) {
-    if (/\s/.test(password)) {
-        return { valid: false, message: 'Password cannot contain spaces' };
-    }
-    if (password.length !== 6) {
-        return { valid: false, message: 'Password must be exactly 6 characters long' };
-    }
-    return { valid: true };
-}
+              console.log("Validating password:", password); // Log the password being validated
+             const trimmedPassword = password.trim();
+             if (/\s/.test(trimmedPassword)) {
+                 console.log("Password validation result: Password cannot contain spaces")
+                return { valid: false, message: 'Password cannot contain spaces' };
+            }
+             if (trimmedPassword.length !== 6) {
+                  console.log("Password validation result: Password must be exactly 6 characters long")
+                return { valid: false, message: 'Password must be exactly 6 characters long' };
+             }
+              console.log("Password validation result: success");
+             return { valid: true };
+         }
 
 function clearInput(inputId, errorId) {
     const input = document.getElementById(inputId);
@@ -429,7 +445,7 @@ function handleEmailInput(inputElement, errorElementId) {
     if (inputElement) {
         const email = inputElement.value.toLowerCase();
         const cleanedEmail = email.replace(/\s+/g, '');
-
+         console.log("Trimmed Email:", cleanedEmail.trim())
         if (!validateEmail(cleanedEmail)) {
             const domain = cleanedEmail.split('@')[1];
              let errorMessage = 'Please enter a valid email address';
@@ -450,6 +466,24 @@ function handleEmailInput(inputElement, errorElementId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+      //  URL parameter handling (newly added code)
+  const urlParams = new URLSearchParams(window.location.search);
+  const verified = urlParams.get('verified');
+
+  if (verified === 'true') {
+    showNotification("Email verified successfully. Please sign in.", "success");
+    const signInContainer = document.querySelector('.sign-in-container');
+    const signUpContainer = document.querySelector('.sign-up-container');
+    if (signInContainer && signUpContainer) {
+      signInContainer.classList.remove('inactive');
+      signUpContainer.classList.remove('active');
+      signUpContainer.style.display = 'none';
+      signInContainer.style.display = 'block';
+    }
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+
+
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/static/service-worker.js')
@@ -719,6 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function validateEmail(email) {
+     console.log("Validating email:", email); // Log the email being validated
     const allowedDomains = [
         'gmail.com',
         'yahoo.com',
@@ -726,15 +761,16 @@ function validateEmail(email) {
         'hotmail.com',
         'aol.com',
         'icloud.com',
-        'edu.in'
+         'edu.in'
     ];
-
+    
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const trimmedEmail = email.trim(); // Trim any leading/trailing whitespace
 
-    const containsLetter = /[a-zA-Z]/.test(email);
-
-    const domain = email.split('@')[1];
+    const containsLetter = /[a-zA-Z]/.test(trimmedEmail);
+    const domain = trimmedEmail.split('@')[1];
     const isAllowedDomain = domain ? allowedDomains.includes(domain.toLowerCase()) : false;
-
-    return re.test(email) && containsLetter && isAllowedDomain;
+    const isValid = re.test(trimmedEmail) && containsLetter && isAllowedDomain;
+    console.log("Validation result:", isValid); // Log the validation result
+    return isValid;
 }

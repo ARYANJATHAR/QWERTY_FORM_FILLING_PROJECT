@@ -331,6 +331,22 @@ def send_pdf_email(pdf_data, recipient_email):
         logging.error(f"Failed to send email: {e}")
         return False
 
+def send_verification_email(email, verification_link):
+    """Send a verification email to the user."""
+    try:
+        msg = Message(
+            subject="Verify Your Email Address",
+            sender=app.config['MAIL_DEFAULT_SENDER'],
+            recipients=[email],
+        )
+        msg.body = f"Click the link below to verify your email address:\n\n{verification_link}"
+        mail.send(msg)
+        logging.info(f"Verification email sent to {email}")
+        return True
+    except Exception as e:
+        logging.error(f"Failed to send verification email: {e}")
+        return False
+
 @app.route('/')
 def index():
     return redirect(url_for('auth_form'))
@@ -366,23 +382,94 @@ def signup():
         # Hash the password using bcrypt
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
+        # Generate a unique verification token
+        verification_token = str(uuid.uuid4())
+        verification_token_expiry = datetime.utcnow() + timedelta(hours=24)  # Token expires in 24 hours
+
         # Insert new user
         payload = {
             "username": username,
             "email": email,
             "password": hashed_password.decode('utf-8'),  # Store as string
+             "verification_token": verification_token,
+            "verification_token_expiry": verification_token_expiry.isoformat(),
+             "is_verified": False,
         }
 
         response = make_supabase_request("POST", "/rest/v1/users", data=payload)
 
         if response:
-            return jsonify({"message": "Signup successful"}), 200
+            # Send verification email
+            verification_link = f"{request.url_root}verify-email?token={verification_token}"
+            if send_verification_email(email, verification_link):
+                 return jsonify({"message": "Signup successful. Please check your email to verify your account."}), 200
+            else:
+                 logging.error(f"Failed to send verification email after successful signup for: {email}")
+                 return jsonify({"message": "Signup successful, but failed to send email, please try again later."}), 500
+
         else:
             return jsonify({"message": "Signup failed", "error": "No response from Supabase"}), 500
 
     except Exception as e:
         logging.error(f"Error during signup: {e}")
         return jsonify({"message": "Signup failed", "error": str(e)}), 500
+
+@app.route('/verify-email', methods=['GET'])
+def verify_email():
+    """Verify email address using the token."""
+    token = request.args.get('token')
+    if not token:
+        return jsonify({"message": "Invalid verification link."}), 400
+
+    try:
+            # Retrieve the user based on the verification token
+            query = {"verification_token": f"eq.{token}"}
+            user_response = make_supabase_request("GET", "/rest/v1/users", params=query)
+
+            if not isinstance(user_response, list) or len(user_response) == 0:
+                logging.error(f"Invalid or expired verification token: {token}")
+                return jsonify({"message": "Invalid or expired verification link."}), 400
+            
+            user = user_response[0]
+            # Check if verification_token_expiry exists and is not None
+            if not user.get('verification_token_expiry'):
+                logging.error(f"Verification token expiry not found for user: {user['email']}")
+                return jsonify({"message": "Invalid or expired verification token."}), 400
+
+            verification_token_expiry_str = user['verification_token_expiry']
+            
+             # Fix the date string by truncating fractional seconds to 6 digits
+            if '.' in verification_token_expiry_str:
+               date_part, time_part = verification_token_expiry_str.split('.')
+               time_part = time_part.split('+')[0]  # Remove timezone if present
+               time_part = time_part[:6]  # Truncate to 6 digits
+               verification_token_expiry_str = f"{date_part}.{time_part}+00:00"  # Reconstruct the date string
+             
+            # Parse the fixed date string
+            verification_token_expiry = datetime.fromisoformat(verification_token_expiry_str)
+
+            # Make datetime.utcnow() timezone-aware
+            current_time = datetime.utcnow().replace(tzinfo=timezone.utc)
+            
+            # Check if the verification token has expired
+            if current_time > verification_token_expiry:
+                logging.error(f"Verification token expired: {token}")
+                make_supabase_request("PATCH", f"/rest/v1/users?id=eq.{user['id']}", data={"verification_token": None, "verification_token_expiry": None})
+                return jsonify({"message": "Verification link has expired. Please sign up again."}), 400
+            
+            # Mark user as verified and clear the token
+            update_payload = {
+                "is_verified": True,
+                "verification_token": None,
+                "verification_token_expiry": None,
+            }
+
+            make_supabase_request("PATCH", f"/rest/v1/users?id=eq.{user['id']}", data=update_payload)
+            logging.info(f"Email verified successfully for: {user['email']}")
+            return redirect(url_for('auth_form') + '?verified=true')
+    except Exception as e:
+        logging.error(f"Error during email verification: {e}")
+        return jsonify({"message": "Email verification failed, please try again later"}), 500
 
 @app.route('/signin', methods=['POST'])
 def signin():
@@ -408,6 +495,12 @@ def signin():
         logging.debug(f"Supabase Response: {user_response}")
         user = user_response[0]
         logging.debug(f"User data: {user}")
+        
+         # Check if the user is verified
+        if not user.get('is_verified'):
+           logging.warning(f"User attempted to sign in without verification for email: {email}")
+           return jsonify({"message": "Please verify your email address before signing in"}), 403
+
 
         # Verify the password using bcrypt
         if bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
