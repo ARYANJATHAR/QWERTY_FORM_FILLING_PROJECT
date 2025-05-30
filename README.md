@@ -1,67 +1,88 @@
-# Beyond-QWERTY: Form-Filling Project
+<!-- PROJECT TITLE AND BADGES -->
+<h1 align="center">Beyond-QWERTY: Form-Filling Project</h1>
+<p align="center">
+  <a href="https://voice-bank-form.onrender.com/"><img src="https://img.shields.io/badge/Live%20Demo-Online-success?style=flat-square&logo=google-chrome" alt="Live Demo"></a>
+  <a href="https://github.com/ARYANJATHAR/QWERTY_FORM_FILLING_PROJECT/blob/main/BankForm.apk"><img src="https://img.shields.io/badge/Download-APK-blue?style=flat-square&logo=android" alt="Download APK"></a>
+  <a href="https://img.shields.io/github/license/ARYANJATHAR/QWERTY_FORM_FILLING_PROJECT"><img src="https://img.shields.io/github/license/ARYANJATHAR/QWERTY_FORM_FILLING_PROJECT?style=flat-square" alt="License"></a>
+</p>
 
-Visit the website 
+---
 
-[Click Here For Website Link](https://voice-bank-form.onrender.com/)
- 
-You can download the latest APK here:
+<p align="center">
+  <a href="https://voice-bank-form.onrender.com/"><strong>🌐 Visit Website</strong></a> | 
+  <a href="https://github.com/ARYANJATHAR/QWERTY_FORM_FILLING_PROJECT/blob/main/BankForm.apk"><strong>⬇️ Download APK</strong></a> | 
+  <a href="https://drive.google.com/file/d/1SUTJHkhfNT-ucLxOVnBwaBixPPvD-GKr/view?usp=sharing"><strong>🎥 Watch Demo</strong></a>
+</p>
 
-[Download Latest APK](https://github.com/ARYANJATHAR/QWERTY_FORM_FILLING_PROJECT/blob/main/BankForm.apk)
+---
 
-Watch the demo video here:
+> **Note:**  
+> The server may take a few seconds to wake up if inactive (cold start). If you see a 502 error, please wait and refresh.
 
-[Click here to see the demo video](<https://drive.google.com/file/d/1SUTJHkhfNT-ucLxOVnBwaBixPPvD-GKr/view?usp=sharing>)
- 
+---
 
-# **Note:** 
-It may take time to go live for the first try as the server goes to sleep when inactive. A new request wakes up the service (cold start), which takes a few seconds. You might encounter a 502 (Bad Gateway error), in which case please try again after a few minutes.
+## 📝 Project Description
 
+Beyond-QWERTY is a voice-enabled, cross-platform solution that simplifies the process of filling out bank account application forms. Users can fill comprehensive forms using voice commands, generate PDFs, and receive email confirmations—on both web and Android platforms.
 
-# Project Description
-This project develops a voice-enabled, cross-platform solution for simplifying bank account application form completion.The application allows users to fill out a comprehensive bank account application form using either their voice or traditional text input. This dual input method caters to a wider range of users, including those who may find voice input more convenient or accessible. The application captures user data, validates it in real-time, and generates a PDF copy of the completed application, which is then emailed to the user for their records. It consists of a web application and an Android application (APK) built from the same codebase.
+---
 
+## ✨ Features
 
+### 🌍 Web Application
 
-# Features : **Web Application:**
+- **🔒 Secure User Authentication**
+  - Email, password, and username sign-up/sign-in
+  - Passwords securely hashed (bcrypt)
+  - Session management and password reset with time-limited tokens
 
-* **Secure User Authentication:**
-    * User sign-up and sign-in with email, password, and username.
-    * Password hashing using bcrypt for security.
-    * Session management to maintain user login status.
-    * Forgot Password functionality with a time-limited reset token.
-* **Interactive Bank Account Application Form:**
-    * Comprehensive form with sections for personal, contact, employment, income, account details, and nominee information.
-    * Voice input support for all text input fields using JavaScript's Speech Recognition API.
-    * Real-time error display for invalid input and input clearing for easy correction.
-    * Client-side and server-side validation to ensure data integrity.  
-* **PDF Generation and Email Notification:**
-    * Generates a PDF copy of the submitted application using ReportLab.
-    * Sends the PDF to the user's email upon successful submission.
-    * Sends password reset and confirmation emails.
-* **Data Storage and Management:**
-    * Utilizes Supabase, a cloud-based Postgres database, for secure data storage.
-    * Employs secure API calls for database interactions.
-* **User Interface (UI) Features:**
-    * Modern and responsive design.
-    * Light/dark theme toggle for user preference.
-    * Clear and intuitive layout with helpful notifications.
-    * Loading indicators during processing.
+- **🗣️ Voice-Enabled Form Filling**
+  - All text fields support voice input (Speech Recognition API)
+  - Real-time error display and input clearing
+  - Robust client & server validation
 
+- **📄 PDF & Email Integration**
+  - Generates PDF of completed form (ReportLab)
+  - Sends PDF and confirmation email upon submission
 
-#  Features : **Android Application (APK):**
+- **🗄️ Data Storage & Security**
+  - Supabase (cloud-based Postgres) for secure data
+  - Secure API calls
 
-* **Direct Installation:** Installable directly on Android devices.
-* **Functional Equivalence:** Provides the same functionality as the web application.
-* **Native App-Like Experience:** Offers a smooth user experience without requiring a browser.
+- **💡 Modern UI/UX**
+  - Responsive layout & theme toggle (light/dark)
+  - Helpful notifications & loading indicators
 
+### 📱 Android Application
 
-# **Technologies Used:**
+- **⚡ Direct Install:** Installs on any Android device
+- **🌐 Parity:** All web features available in the app
+- **📱 Native Feel:** Smooth, browser-free experience
 
-* **Web Application (Frontend):** HTML, CSS, JavaScript .
-* **Web Application (Backend):** Python (Flask framework) .
-* **Database:** Supabase (cloud-based Postgres database).
-* **Android APK Packaging:**  Tools like PWA Builder, is used to package the web application into an installable APK.  
+---
 
-# Conclusion
-This project aims to improve the accessibility and user-friendliness of the bank account application process by leveraging voice input, cross-platform availability, and a secure, robust architecture.
+## 🛠️ Tech Stack
 
+| Frontend      | Backend         | Database | Packaging      |
+| ------------- | -------------- | -------- | ------------- |
+| HTML, CSS, JS | Python (Flask) | Supabase | PWA Builder    |
+
+---
+
+## 🚀 Quick Links
+
+- **[Website](https://voice-bank-form.onrender.com/)**
+- **[Download APK](https://github.com/ARYANJATHAR/QWERTY_FORM_FILLING_PROJECT/blob/main/BankForm.apk)**
+- **[Demo Video](https://drive.google.com/file/d/1SUTJHkhfNT-ucLxOVnBwaBixPPvD-GKr/view?usp=sharing)**
+
+---
+
+## 🏁 Conclusion
+
+Beyond-QWERTY improves accessibility and ease of bank account applications using voice input, robust cross-platform design, and secure architecture.
+
+---
+
+<p align="center">
+  <b>Made with ❤️ by <a href="https://github.com/ARYANJATHAR">ARYAN JATHAR</a></b>
+</p>
