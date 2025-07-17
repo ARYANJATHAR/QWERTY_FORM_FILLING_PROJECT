@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice-Enabled Bank Form</title>
+    
+    <!-- CSS Files - Modular approach -->
+    <link rel="stylesheet" href="/static/css/variables.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <link rel="stylesheet" href="/static/css/forms.css">
+    <link rel="stylesheet" href="/static/css/auth.css">
+    <link rel="stylesheet" href="/static/css/theme-switch.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/static/manifest.json">
+    
+    <!-- Meta tags for PWA -->
+    <meta name="theme-color" content="#4ecdc4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Bank Form">
+</head>
+<body>
+    <!-- Skip navigation for accessibility -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">Voice-Enabled Bank Form</h1>
+            <p class="header-subtitle">Secure and convenient banking at your fingertips</p>
+        </div>
+    </header>
+
+    <!-- Theme Switch -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round">
+                <span class="mode-icon">🌙</span>
+                <span class="mode-icon">☀️</span>
+            </div>
+        </label>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+        <div class="auth-container">
+            
+            <!-- Sign In Form -->
+            <div class="auth-form-wrapper" id="signInWrapper">
+                <div class="auth-form-container">
+                    <div class="auth-form-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to your account</p>
+                    </div>
+                    
+                    <form id="signInForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="signInEmail" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <input
+                                    type="email"
+                                    id="signInEmail"
+                                    name="email"
+                                    class="form-input"
+                                    placeholder="Enter your email"
+                                    required
+                                    aria-required="true"
+                                    aria-describedby="signInEmailError"
+                                />
+                                <div class="input-actions">
+                                    <button type="button" class="input-action voice-btn" id="voiceIconSignInEmail" aria-label="Voice input for email">
+                                        <span class="voice-icon">🎤</span>
+                                    </button>
+                                    <button type="button" class="input-action clear-btn" id="clearSignInEmail" aria-label="Clear email">
+                                        <span class="clear-icon">✕</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="voice-status" id="voiceStatusSignInEmail"></div>
+                            <div class="error-message" id="signInEmailError" role="alert"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signInPassword" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input
+                                    type="password"
+                                    id="signInPassword"
+                                    name="password"
+                                    class="form-input"
+                                    placeholder="Enter your password"
+                                    required
+                                    aria-required="true"
+                                    aria-describedby="signInPasswordError"
+                                />
+                                <div class="input-actions">
+                                    <button type="button" class="input-action voice-btn" id="voiceIconSignInPassword" aria-label="Voice input for password">
+                                        <span class="voice-icon">🎤</span>
+                                    </button>
+                                    <button type="button" class="input-action toggle-btn" id="toggleSignInPassword" aria-label="Toggle password visibility">
+                                        <span class="toggle-icon">👁️</span>
+                                    </button>
+                                    <button type="button" class="input-action clear-btn" id="clearSignInPassword" aria-label="Clear password">
+                                        <span class="clear-icon">✕</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="voice-status" id="voiceStatusSignInPassword"></div>
+                            <div class="error-message" id="signInPasswordError" role="alert"></div>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Sign In</button>
+                        
+                        <div class="form-links">
+                            <a href="#" id="forgotPasswordLink" class="link-primary">Forgot Password?</a>
+                        </div>
+                    </form>
+                    
+                    <div class="auth-switch">
+                        <p>Don't have an account? <a href="#" id="signUpLink" class="link-primary">Sign Up</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div class="auth-form-wrapper hidden" id="signUpWrapper">
+                <div class="auth-form-container">
+                    <div class="auth-form-header">
+                        <h2>Create Account</h2>
+                        <p>Join us today</p>
+                    </div>
+                    
+                    <form id="signUpForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="signUpUsername" class="form-label">Username</label>
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    id="signUpUsername"
+                                    name="username"
+                                    class="form-input"
+                                    placeholder="Choose a username"
+                                    required
+                                    aria-required="true"
+                                    aria-describedby="signUpUsernameError"
+                                />
+                                <div class="input-actions">
+                                    <button type="button" class="input-action voice-btn" id="voiceIconSignUpUsername" aria-label="Voice input for username">
+                                        <span class="voice-icon">🎤</span>
+                                    </button>
+                                    <button type="button" class="input-action clear-btn" id="clearSignUpUsername" aria-label="Clear username">
+                                        <span class="clear-icon">✕</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="voice-status" id="voiceStatusSignUpUsername"></div>
+                            <div class="error-message" id="signUpUsernameError" role="alert"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signUpEmail" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <input
+                                    type="email"
+                                    id="signUpEmail"
+                                    name="email"
+                                    class="form-input"
+                                    placeholder="Enter your email"
+                                    required
+                                    aria-required="true"
+                                    aria-describedby="signUpEmailError"
+                                />
+                                <div class="input-actions">
+                                    <button type="button" class="input-action voice-btn" id="voiceIconSignUpEmail" aria-label="Voice input for email">
+                                        <span class="voice-icon">🎤</span>
+                                    </button>
+                                    <button type="button" class="input-action clear-btn" id="clearSignUpEmail" aria-label="Clear email">
+                                        <span class="clear-icon">✕</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="voice-status" id="voiceStatusSignUpEmail"></div>
+                            <div class="error-message" id="signUpEmailError" role="alert"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signUpPassword" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input
+                                    type="password"
+                                    id="signUpPassword"
+                                    name="password"
+                                    class="form-input"
+                                    placeholder="Create a password"
+                                    required
+                                    aria-required="true"
+                                    aria-describedby="signUpPasswordError"
+                                />
+                                <div class="input-actions">
+                                    <button type="button" class="input-action voice-btn" id="voiceIconSignUpPassword" aria-label="Voice input for password">
+                                        <span class="voice-icon">🎤</span>
+                                    </button>
+                                    <button type="button" class="input-action toggle-btn" id="toggleSignUpPassword" aria-label="Toggle password visibility">
+                                        <span class="toggle-icon">👁️</span>
+                                    </button>
+                                    <button type="button" class="input-action clear-btn" id="clearSignUpPassword" aria-label="Clear password">
+                                        <span class="clear-icon">✕</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="voice-status" id="voiceStatusSignUpPassword"></div>
+                            <div class="error-message" id="signUpPasswordError" role="alert"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="termsCheckbox" name="terms" required class="checkbox-input">
+                                <label for="termsCheckbox" class="checkbox-label">
+                                    I agree to the <a href="#" class="link-primary">Terms of Service</a> and <a href="#" class="link-primary">Privacy Policy</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-button">Create Account</button>
+                    </form>
+                    
+                    <div class="auth-switch">
+                        <p>Already have an account? <a href="#" id="signInLink" class="link-primary">Sign In</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forgot Password Modal -->
+        <div id="forgotPasswordModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Reset Password</h3>
+                    <button class="modal-close" aria-label="Close modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Enter your email address and we'll send you a link to reset your password.</p>
+                    <form id="forgotPasswordForm">
+                        <div class="form-group">
+                            <label for="forgotPasswordEmail" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <input
+                                    type="email"
+                                    id="forgotPasswordEmail"
+                                    name="email"
+                                    class="form-input"
+                                    placeholder="Enter your email"
+                                    required
+                                    aria-required="true"
+                                    aria-describedby="forgotPasswordEmailError"
+                                />
+                                <div class="input-actions">
+                                    <button type="button" class="input-action voice-btn" id="voiceIconForgotPasswordEmail" aria-label="Voice input for email">
+                                        <span class="voice-icon">🎤</span>
+                                    </button>
+                                    <button type="button" class="input-action clear-btn" id="clearForgotPasswordEmail" aria-label="Clear email">
+                                        <span class="clear-icon">✕</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="voice-status" id="voiceStatusForgotPasswordEmail"></div>
+                            <div class="error-message" id="forgotPasswordEmailError" role="alert"></div>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="submit-button">Send Reset Link</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div id="notification" class="notification"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2025 Voice-Enabled Bank Form. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="/static/js/api-client.js"></script>
+    <script src="/static/js/voice-recognition.js"></script>
+    <script src="/static/js/form-utils.js"></script>
+    <script src="/static/js/theme-manager.js"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/auth-manager.js"></script>
+</body>
+</html>

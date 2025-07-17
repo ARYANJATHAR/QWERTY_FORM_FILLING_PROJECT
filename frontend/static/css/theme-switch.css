@@ -1,0 +1,114 @@
+/* Theme Switch Component */
+
+.theme-switch-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.theme-switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: var(--transition-medium);
+  border-radius: 34px;
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: var(--transition-medium);
+  width: 26px;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Mode icons */
+.mode-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  transition: opacity var(--transition-fast);
+}
+
+.mode-icon:first-child {
+  left: 8px;
+  opacity: 1;
+}
+
+.mode-icon:last-child {
+  right: 8px;
+  opacity: 0;
+}
+
+input:checked + .slider .mode-icon:first-child {
+  opacity: 0;
+}
+
+input:checked + .slider .mode-icon:last-child {
+  opacity: 1;
+}
+
+/* Responsive theme switch */
+@media (max-width: 768px) {
+  .theme-switch-wrapper {
+    top: 15px;
+    right: 15px;
+  }
+  
+  .theme-switch {
+    height: 30px;
+    width: 54px;
+  }
+  
+  .slider:before {
+    height: 22px;
+    width: 22px;
+    bottom: 4px;
+    left: 4px;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+  
+  .mode-icon {
+    font-size: 12px;
+  }
+}

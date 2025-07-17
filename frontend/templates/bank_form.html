@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Form - Voice-Enabled</title>
+    
+    <!-- CSS Files - Modular approach -->
+    <link rel="stylesheet" href="/static/css/variables.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <link rel="stylesheet" href="/static/css/forms.css">
+    <link rel="stylesheet" href="/static/css/theme-switch.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/static/manifest.json">
+    
+    <!-- Meta tags for PWA -->
+    <meta name="theme-color" content="#4ecdc4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Bank Form">
+</head>
+<body>
+    <!-- Skip navigation for accessibility -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">Bank Account Opening Form</h1>
+            <p class="header-subtitle">Complete your bank account application with voice assistance.</p>
+        </div>
+    </header>
+
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="themeCheckbox">
+            <input type="checkbox" id="themeCheckbox" />
+            <div class="slider round">
+                <span class="mode-icon">🌙</span>
+                <span class="mode-icon">☀️</span>
+            </div>
+        </label>
+    </div>
+
+    <div class="container" role="main" id="main-content">
+        <div class="form-wrapper">
+            <form id="bankForm" class="auth-form">
+                <h2>Personal Information</h2>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <div class="input-wrapper">
+                        <div class="input-container">
+                            <input 
+                                type="text" 
+                                id="fullName" 
+                                name="fullName" 
+                                required
+                                aria-required="true"
+                                aria-describedby="fullNameError"
+                                placeholder="Enter your full name"
+                            />
+                            <span class="clear-icon" id="clearFullName" aria-label="Clear full name input">❌</span>
+                        </div>
+                        <span class="voice-icon" id="voiceFullName" aria-label="Voice input for full name">🎤</span>
+                    </div>
+                    <span class="voice-status-text" id="voiceStatusFullName"></span>
+                    <span class="error-message" id="fullNameError" aria-live="assertive"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth:</label>
+                    <div class="input-wrapper">
+                        <div class="input-container">
+                            <input 
+                                type="date" 
+                                id="dateOfBirth" 
+                                name="dateOfBirth" 
+                                required
+                                aria-required="true"
+                                aria-describedby="dateOfBirthError"
+                            />
+                        </div>
+                    </div>
+                    <span class="error-message" id="dateOfBirthError" aria-live="assertive"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <div class="input-wrapper">
+                        <div class="input-container">
+                            <input 
+                                type="tel" 
+                                id="phoneNumber" 
+                                name="phoneNumber" 
+                                required
+                                aria-required="true"
+                                aria-describedby="phoneNumberError"
+                                placeholder="Enter your phone number"
+                                pattern="[0-9]{10}"
+                            />
+                            <span class="clear-icon" id="clearPhoneNumber" aria-label="Clear phone number input">❌</span>
+                        </div>
+                        <span class="voice-icon" id="voicePhone" aria-label="Voice input for phone number">🎤</span>
+                    </div>
+                    <span class="voice-status-text" id="voiceStatusPhone"></span>
+                    <span class="error-message" id="phoneNumberError" aria-live="assertive"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <div class="input-wrapper">
+                        <div class="input-container">
+                            <textarea 
+                                id="address" 
+                                name="address" 
+                                rows="3" 
+                                required
+                                aria-required="true"
+                                aria-describedby="addressError"
+                                placeholder="Enter your complete address"
+                            ></textarea>
+                            <span class="clear-icon" id="clearAddress" aria-label="Clear address input">❌</span>
+                        </div>
+                        <span class="voice-icon" id="voiceAddress" aria-label="Voice input for address">🎤</span>
+                    </div>
+                    <span class="voice-status-text" id="voiceStatusAddress"></span>
+                    <span class="error-message" id="addressError" aria-live="assertive"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="accountType">Account Type:</label>
+                    <div class="input-wrapper">
+                        <div class="input-container">
+                            <select 
+                                id="accountType" 
+                                name="accountType" 
+                                required
+                                aria-required="true"
+                                aria-describedby="accountTypeError"
+                            >
+                                <option value="">Select Account Type</option>
+                                <option value="savings">Savings Account</option>
+                                <option value="current">Current Account</option>
+                                <option value="fd">Fixed Deposit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <span class="error-message" id="accountTypeError" aria-live="assertive"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="initialDeposit">Initial Deposit Amount (₹):</label>
+                    <div class="input-wrapper">
+                        <div class="input-container">
+                            <input 
+                                type="number" 
+                                id="initialDeposit" 
+                                name="initialDeposit" 
+                                min="1000" 
+                                step="1"
+                                required
+                                aria-required="true"
+                                aria-describedby="initialDepositError"
+                                placeholder="Minimum ₹1000"
+                            />
+                            <span class="clear-icon" id="clearInitialDeposit" aria-label="Clear deposit amount input">❌</span>
+                        </div>
+                        <span class="voice-icon" id="voiceDeposit" aria-label="Voice input for deposit amount">🎤</span>
+                    </div>
+                    <span class="voice-status-text" id="voiceStatusDeposit"></span>
+                    <span class="error-message" id="initialDepositError" aria-live="assertive"></span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                    <button type="button" class="btn btn-secondary logout-btn">Logout</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2025 Voice-Enabled Bank Form. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Processing your application...</p>
+    </div>
+
+    <!-- Notification container -->
+    <div id="notification" class="notification"></div>
+
+    <!-- JavaScript Files - Modular approach -->
+    <script src="/static/js/api-client.js"></script>
+    <script src="/static/js/voice-recognition.js"></script>
+    <script src="/static/js/form-utils.js"></script>
+    <script src="/static/js/theme-manager.js"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/bank-form-manager.js"></script>
+</body>
+</html>

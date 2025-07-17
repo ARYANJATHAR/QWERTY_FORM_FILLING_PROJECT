@@ -1,0 +1,9 @@
+Flask
+Flask-Session
+Flask-Mail
+python-dotenv
+reportlab
+bcrypt
+requests
+Flask-WTF
+Flask-Limiter

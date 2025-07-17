@@ -1,0 +1,376 @@
+/* Loading, Notification and Modal Components */
+
+/* Loading overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.loading-spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid var(--primary-color);
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-overlay p {
+  color: white;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* Legacy loader support */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 9998;
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid var(--primary-color);
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  display: none;
+  z-index: 9999;
+}
+
+/* Notification system */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--form-background);
+  color: var(--text-color);
+  padding: 1rem 3rem 1rem 1.5rem;
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-heavy);
+  border-left: 4px solid var(--info-color);
+  max-width: 400px;
+  z-index: 10000;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all var(--transition-medium);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notification.success {
+  border-left-color: var(--success-color);
+}
+
+.notification.error {
+  border-left-color: var(--error-color);
+}
+
+.notification.warning {
+  border-left-color: var(--warning-color);
+}
+
+.notification.info {
+  border-left-color: var(--info-color);
+}
+
+.notification-message {
+  flex: 1;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.notification-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+}
+
+/* Modal system */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: var(--form-background);
+  margin: 5% auto;
+  padding: 0;
+  border-radius: var(--border-radius-large);
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--shadow-heavy);
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--container-border);
+  background: var(--container-background);
+}
+
+.modal-title {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.25rem;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-footer {
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--container-border);
+  background: var(--container-background);
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.close {
+  color: var(--text-muted);
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  padding: 0.25rem;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close:hover,
+.close:focus {
+  color: var(--error-color);
+  background: rgba(255, 68, 68, 0.1);
+}
+
+/* Toast notifications (alternative style) */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toast {
+  background: var(--form-background);
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-medium);
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all var(--transition-medium);
+  border-left: 4px solid var(--info-color);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast.success {
+  border-left-color: var(--success-color);
+}
+
+.toast.error {
+  border-left-color: var(--error-color);
+}
+
+/* Focus management */
+.form-group.focused {
+  transform: scale(1.01);
+  transition: transform var(--transition-fast);
+}
+
+.form-group.focused label {
+  color: var(--primary-color);
+}
+
+/* Animations */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive modals and notifications */
+@media (max-width: 768px) {
+  .modal-content {
+    margin: 10% auto;
+    width: 95%;
+  }
+  
+  .modal-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .modal-footer {
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+  }
+  
+  .notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    padding: 1rem 2.5rem 1rem 1rem;
+  }
+  
+  .toast-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    margin: 5% auto;
+    width: 98%;
+  }
+  
+  .modal-header {
+    padding: 1rem;
+  }
+  
+  .modal-body {
+    padding: 1rem;
+  }
+  
+  .modal-footer {
+    padding: 1rem;
+  }
+  
+  .notification {
+    font-size: 0.9rem;
+    padding: 0.75rem 2rem 0.75rem 1rem;
+  }
+  
+  .notification-close {
+    font-size: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .toast {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+}

@@ -29,6 +29,7 @@ This project develops a voice-enabled, cross-platform solution for simplifying b
     * Password hashing using bcrypt for security.
     * Session management to maintain user login status.
     * Forgot Password functionality with a time-limited reset token.
+    * Email validation allows gmail.com, yahoo.com, outlook.com, hotmail.com, aol.com, icloud.com, and any .edu.in domain (e.g., college.edu.in).
 * **Interactive Bank Account Application Form:**
     * Comprehensive form with sections for personal, contact, employment, income, account details, and nominee information.
     * Voice input support for all text input fields using JavaScript's Speech Recognition API.

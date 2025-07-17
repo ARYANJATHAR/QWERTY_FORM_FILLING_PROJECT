@@ -1,0 +1,150 @@
+/* CSS Variables and Theme Configuration */
+:root {
+  /* Light theme colors */
+  --primary-color: #4ecdc4;
+  --secondary-color: #45b7aa;
+  --accent-color: #36a9a1;
+  
+  /* Background colors */
+  --background-start: #a1c4fd;
+  --background-end: #c2e9fb;
+  --body-background: linear-gradient(135deg, var(--background-start) 0%, var(--background-end) 100%);
+  
+  /* Text colors */
+  --text-color: #333;
+  --text-secondary: #666;
+  --text-muted: #999;
+  
+  /* Form colors */
+  --form-background: rgba(255, 255, 255, 0.9);
+  --container-background: rgba(255, 255, 255, 0.15);
+  --container-border: rgba(255, 255, 255, 0.2);
+  
+  /* Input colors */
+  --input-background: #ffffff;
+  --input-text: #333;
+  --input-border: #ddd;
+  --input-focus-border: var(--primary-color);
+  
+  /* Status colors */
+  --error-color: #ff4444;
+  --success-color: #00C851;
+  --warning-color: #ff9800;
+  --info-color: #2196f3;
+  
+  /* Interactive elements */
+  --link-color: #4ecdc4;
+  --button-text: #fff;
+  --button-hover: var(--secondary-color);
+  
+  /* Shadows and effects */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-light: 0 2px 4px var(--shadow-color);
+  --shadow-medium: 0 4px 8px var(--shadow-color);
+  --shadow-heavy: 0 8px 16px var(--shadow-color);
+  
+  /* Border radius */
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 12px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+  --primary-color: #2196f3;
+  --secondary-color: #1976d2;
+  --accent-color: #1565c0;
+  
+  --background-start: #2c3e50;
+  --background-end: #3498db;
+  --body-background: linear-gradient(135deg, var(--background-start) 0%, var(--background-end) 100%);
+  
+  --text-color: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #999999;
+  
+  --form-background: rgba(33, 33, 33, 0.9);
+  --container-background: rgba(0, 0, 0, 0.25);
+  --container-border: rgba(255, 255, 255, 0.1);
+  
+  --input-background: #424242;
+  --input-text: #ffffff;
+  --input-border: #555;
+  --input-focus-border: var(--primary-color);
+  
+  --link-color: #6ee7df;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* System preferences for theme */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --primary-color: #2196f3;
+    --secondary-color: #1976d2;
+    --accent-color: #1565c0;
+    
+    --background-start: #2c3e50;
+    --background-end: #3498db;
+    --body-background: linear-gradient(135deg, var(--background-start) 0%, var(--background-end) 100%);
+    
+    --text-color: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #999999;
+    
+    --form-background: rgba(33, 33, 33, 0.9);
+    --container-background: rgba(0, 0, 0, 0.25);
+    --container-border: rgba(255, 255, 255, 0.1);
+    
+    --input-background: #424242;
+    --input-text: #ffffff;
+    --input-border: #555;
+    --input-focus-border: var(--primary-color);
+    
+    --link-color: #6ee7df;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
